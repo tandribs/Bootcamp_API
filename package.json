@@ -1,19 +1,24 @@
 {
-  "name": "bootcamp---api",
+  "name": "bootcamp",
   "version": "1.0.0",
-  "description": "Aplicacao do Bootcamp",
+  "description": "Projeto backend da trilha fullstack",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --inspect --ignore-watch node_modules src/server.ts",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint ."
   },
-  "author": "Thais",
+  "author": "Thais Andrade",
   "license": "ISC",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "eslint": "^8.16.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.6.2",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.7.2"
+    "prettier": "^2.6.2"
   }
 }
