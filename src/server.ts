@@ -3,19 +3,6 @@ import express, { Request, Response } from 'express';
 const app = express();
 app.use(express.json());
 
-//  {
-//  id: 1,
-// name: 'NodeJS',
-//  created_at: '2022-05-25 00:00:00',
-//  updated_at: '2022-05-25 00:00:00',
-//},
-//{
-//  id: 2,
-//  name: 'MySQL',
-//  created_at: '2022-05-25 00:00:00',
-//  updated_at: '2022-05-25 00:00:00',
-//},
-
 const categories: any = [];
 
 app.get('/', (request: Request, response: Response) => {
@@ -28,10 +15,24 @@ app.get('/categories', (request: Request, response: Response) => {
 });
 
 app.post('/categories', (request: Request, response: Response) => {
-  const data = request.body;
-  console.log(data);
-  categories.push(data);
+const data = request.body;
+
+  const category = {
+    id: (categories.length + 1),
+    name: data.name,
+    created_at: new Date(),
+    updated_at: new Date(),
+  };
+
+  categories.push(category);
   return response.json().status(200);
+});
+
+app.get('/categories/:id', (request: Request, response: Response) => {
+  const { id } = request.params;
+  const category = categories.find((item: any) => item.id == id);
+
+  return response.json(category).status(200);
 });
 
 app.listen(3000, () => {
