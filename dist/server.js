@@ -4,33 +4,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const routes_1 = require("./routes");
+const environment_variables_1 = require("./config/environment-variables");
+const data_source_1 = require("./config/data-source");
+const middlewares_1 = require("./middlewares");
+const PORT = environment_variables_1.env.PORT || 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-const categories = [];
-app.get('/', (request, response) => {
-    return response.json({ status: 'success', version: '1.0.0' }).status(200);
-});
-//GET ALL CATEGORIES
-app.get('/categories', (request, response) => {
-    return response.json(categories).status(200);
-});
-app.post('/categories', (request, response) => {
-    const data = request.body;
-    const category = {
-        id: (categories.length + 1),
-        name: data.name,
-        created_at: new Date(),
-        updated_at: new Date(),
-    };
-    categories.push(category);
-    return response.json().status(200);
-});
-app.get('/categories/:id', (request, response) => {
-    const { id } = request.params;
-    const category = categories.find((item) => item.id == id);
-    return response.json(category).status(200);
-});
-app.listen(3000, () => {
-    console.log('Server is running');
-});
+app.use(routes_1.routes);
+app.use(middlewares_1.errorHandler);
+data_source_1.AppDataSource.initialize()
+    .then(() => {
+    app.listen(PORT, () => console.log(`Server is running in port: ${PORT}`));
+})
+    .catch((error) => console.log(error));
 //# sourceMappingURL=server.js.map
